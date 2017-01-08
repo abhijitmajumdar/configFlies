@@ -1,45 +1,22 @@
 #include <iostream>
-#include <fstream>
-#include <string>
+#include "configLoader.h"
 
 using namespace std;
 
-static int kP=0,kI=0,kD=0;
+static int kP=0;
+static float kI=0;
+static double kD=0;
 
 int main(int argc, char* argv[])
 {
-	string line;
-	cout<<argc<<" arguments\n";
+	cout<<argc<<" argument(s)\n";
 	while(argc--)
 		cout<<argc<<" : "<<argv[argc]<<'\n';
-	cout<<"Begin\n";
-	fstream configFile;
-	configFile.open("config.txt",ios::out | ios::in);
-	if(configFile.is_open())
-	{
-		//Load the configurations
-		while(getline(configFile,line))
-		{
-			cout<<line<<'\n';
-		}
-		configFile.clear();
-		configFile>>line;
-		configFile>>line;
-		configFile>>line;
-		
-		configFile.clear();
-		
-		//Write the configurations
-		configFile<<"kP="<<kP+1<<"\n";
-		configFile<<"kI="<<kI+2<<"\n";
-		configFile<<"kD="<<kD+3<<"\n";
-		
-		//Close file at the end
-		configFile.close();
-	}
-	else
-	{
-		cout<<"Error reading config file. Loading deafult values";
-	}
+	cout<<"\nBegin\n\n";
+	qConfig::readConfigFile("config.txt",&kP,&kI,&kD);
+	cout<<"Parameters set are\n";
+	cout<<"kP = "<<kP<<"\n";
+	cout<<"kI = "<<kI<<"\n";
+	cout<<"kD = "<<kD<<"\n";
 	return 0;
 }
